@@ -103,6 +103,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   radial-gradient(ellipse 50% 60% at 50% 50%, rgba(10,18,34,.9), rgba(10,18,34,.7) 58%, rgba(10,18,34,.44) 100%),
   linear-gradient(180deg, rgba(12,17,28,.55), rgba(12,17,28,0) 16%, rgba(12,17,28,0) 74%, #0C111C 100%); }
 .hero-inner { display: grid; justify-items: center; text-align: center; gap: 14px; }
+/* venue badge: gradient text, glow, and a slowly turning gradient ring */
+@property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.venue { position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 11px; padding: 13px 28px 13px 21px; border-radius: 999px; background: rgba(12,17,28,.74); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 0 48px rgba(255,107,61,.5), 0 12px 34px -12px rgba(255,107,61,.7); }
+.venue::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 2px; background: conic-gradient(from var(--ang), #FF6B3D, #FFB39B, #B88CF5, #4FD6C6, #FF6B3D); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: venue-spin 6s linear infinite; }
+@keyframes venue-spin { to { --ang: 360deg; } }
+.venue .spark { width: 20px; height: 20px; fill: #FF8A65; filter: drop-shadow(0 0 6px rgba(255,107,61,.85)); animation: twinkle 2.6s ease-in-out infinite; flex: none; }
+@keyframes twinkle { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(.72) rotate(45deg); } }
+.venue-text { font: 700 clamp(18px, 2.3vw, 25px)/1.1 var(--sans); letter-spacing: .01em; background: linear-gradient(90deg, #FFE6DB, #FFB39B 45%, #FF8A65); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .title { font: 700 clamp(3.1rem, 10.5vw, 7.4rem)/.94 var(--display); letter-spacing: -.02em; color: var(--ink); margin: 8px 0 0; text-shadow: 0 8px 50px rgba(0,0,0,.5); }
 .glasses { position: relative; width: min(500px, 82vw); margin: 0 auto 2px; }
 .glasses img { width: 100%; height: auto; filter: drop-shadow(0 0 16px rgba(127,166,232,.28)); }
@@ -374,5 +382,5 @@ footer p { margin: 0 0 8px; max-width: 900px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .pulse, .cam::after, .hot::after { animation: none; }
+  .pulse, .cam::after, .hot::after, .venue::before, .venue .spark { animation: none; }
 }
