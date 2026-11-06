@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EgoSurgHands · Egocentric 3D Hand Pose for Open-Surgery Training</title>
   <meta name="description" content="EgoSurgHands: an egocentric 3D hand pose dataset and benchmark for open-surgery training, captured with Project Aria glasses. NeurIPS 2026, Evaluations & Datasets Track.">
-  <meta name="theme-color" content="#fafaf8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0c111c">
   <meta property="og:type" content="website">
   <meta property="og:title" content="EgoSurgHands: An Egocentric 3D Hand Pose Dataset & Benchmark for Open-Surgery Training">
   <meta property="og:description" content="51,385 hand instances from Project Aria glasses, human-validated evaluation labels, and eight hand-pose methods benchmarked zero-shot. NeurIPS 2026, Evaluations & Datasets Track.">
@@ -16,7 +15,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='88'>🖐</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
   <link rel="stylesheet" href="style.css">
   <script>
     document.documentElement.classList.add("js");
@@ -27,17 +26,17 @@
 
 <header class="topbar">
   <div class="wrap topbar-inner">
-    <a class="brand" href="#top"><span class="dot"></span>EgoSurgHands</a>
+    <a class="brand" href="#top" aria-label="EgoSurgHands, back to top"><img class="art" src="media/aria_glasses.webp" width="1235" height="503" alt=""><span class="word">EgoSurgHands</span></a>
     <nav class="nav" aria-label="Sections">
-      <a href="#abstract" class="hide-sm">Overview</a>
+      <a href="#overview" class="hide-sm">Overview</a>
+      <a href="#live">Live</a>
       <a href="#dataset">Dataset</a>
       <a href="#benchmark">Benchmark</a>
-      <a href="#wearers" class="hide-sm">Wearers</a>
-      <a href="#labels">Labels</a>
-      <a href="#resources" class="hide-sm">Resources</a>
+      <a href="#labels" class="hide-sm">Labels</a>
+      <a href="#aria" class="hide-sm">Aria</a>
       <a href="#citation">Cite</a>
     </nav>
-    <button class="theme-btn" type="button" aria-label="Toggle dark mode">
+    <button class="theme-btn" type="button" aria-label="Switch between dark and light">
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
       <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
     </button>
@@ -46,28 +45,37 @@
 
 <main id="top">
 
-  <!-- ================= HERO ================= -->
-  <div class="hero">
-    <div class="wrap">
-      <span class="venue"><span class="dot"></span>NeurIPS 2026 · Evaluations &amp; Datasets Track</span>
+  <!-- ================= HERO: live video wall ================= -->
+  <section class="hero on-dark" aria-label="EgoSurgHands">
+    <div class="wall" aria-hidden="true"><video id="wall" muted loop playsinline preload="auto"></video></div>
+    <div class="shade" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <span class="pill"><i class="pulse"></i>NeurIPS 2026 · Evaluations &amp; Datasets Track</span>
       <h1 class="title">EgoSurgHands</h1>
+      <div class="glasses">
+        <img src="media/aria_glasses.webp" width="1235" height="503" alt="Line drawing of the Project Aria (Gen 1) glasses used for every recording">
+        <i class="cam rgb" style="left:51.82%;top:44.14%" title="RGB camera"></i>
+        <i class="cam slam" style="left:61.54%;top:55.07%" title="SLAM camera"></i>
+      </div>
       <p class="subtitle">An Egocentric 3D Hand Pose Dataset &amp; Benchmark for <span class="nw">Open-Surgery Training</span></p>
-
       <div class="authors">
-        <span>Ankit Pal<sup>1</sup></span>
-        <span>Guillaume Kugener<sup>2</sup></span>
-        <span>Sofia Volpi<sup>2</sup></span>
-        <span>Joshua Schwartz<sup>2</sup></span>
-        <span>Alex Idarraga<sup>2</sup></span>
-        <span>Pranav Rajpurkar<sup>1,†</sup></span>
-        <span>Gabriel A Brat<sup>1,2,†</sup></span>
+        <div class="arow">
+          <span>Ankit Pal<sup>1</sup></span>
+          <span>Guillaume Kugener<sup>2</sup></span>
+          <span>Sofia Volpi<sup>2</sup></span>
+          <span>Joshua Schwartz<sup>2</sup></span>
+          <span>Alex Idarraga<sup>2</sup></span>
+        </div>
+        <div class="arow senior" aria-label="Senior authors">
+          <span>Pranav Rajpurkar<sup>1,†</sup></span>
+          <span>Gabriel A Brat<sup>1,2,†</sup></span>
+        </div>
       </div>
       <div class="affils">
         <span><sup>1</sup>Department of Biomedical Informatics, Harvard Medical School</span>
         <span><sup>2</sup>Department of Surgery, Beth Israel Deaconess Medical Center</span>
         <span><sup>†</sup>Equal senior authorship</span>
       </div>
-
       <div class="actions">
         <span class="btn soon" aria-disabled="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.8H6.8A1.8 1.8 0 0 0 5 4.6v14.8a1.8 1.8 0 0 0 1.8 1.8h10.4a1.8 1.8 0 0 0 1.8-1.8V7.8z"/><path d="M14 2.8v5h5M8.5 13h7M8.5 16.6h4.6"/></svg>
@@ -77,28 +85,36 @@
           <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
           Code
         </a>
-        <a class="btn" href="https://huggingface.co/datasets/aaditya/EgoSurgHands">
-          <span class="emoji" aria-hidden="true">🤗</span>
-          Dataset
+        <a class="btn" href="https://huggingface.co/datasets/aaditya/EgoSurgHands"><span class="emoji" aria-hidden="true">🤗</span>Dataset</a>
+        <a class="btn" href="#benchmark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>
+          Leaderboard
         </a>
-        <a class="btn ghost" href="#citation">
+        <a class="btn" href="#citation">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6.5H6.2A1.7 1.7 0 0 0 4.5 8.2v3.3a1.7 1.7 0 0 0 1.7 1.7h3.3V17a3 3 0 0 1-3 3M19.5 6.5h-3.3a1.7 1.7 0 0 0-1.7 1.7v3.3a1.7 1.7 0 0 0 1.7 1.7h3.3V17a3 3 0 0 1-3 3"/></svg>
           BibTeX
         </a>
       </div>
+      <span class="live"><i class="pulse"></i>Live · Aria MPS 3D hand tracking on the glasses' own video, 30 fps</span>
+    </div>
+  </section>
 
+  <!-- ================= OVERVIEW ================= -->
+  <section id="overview">
+    <div class="wrap">
       <p class="tldr reveal"><b>TL;DR</b>To our knowledge, the first benchmark for real-captured egocentric 3D hand pose in open-surgery training: 51,385 hand instances recorded with Project Aria glasses, human-validated evaluation labels, and eight hand-pose methods tested zero-shot.</p>
 
-      <figure class="figure-card paper teaser reveal">
-        <img class="zoomable" src="assets/teaser.webp" width="2400" height="1148" alt="Nine egocentric frames, one per surgical-training task family, each with hand-skeleton overlays and per-task statistics: number of frames, wearers, videos and duration.">
-        <figcaption><b>EgoSurgHands at a glance.</b> Eight surgical-training task families (13 task variants), four wearers, three experience tiers (MS1, PGY0, PGY3) and three glove colours, captured with Project Aria glasses (1408 × 1408 fisheye RGB). Click any figure to enlarge.</figcaption>
-      </figure>
-    </div>
-  </div>
+      <div class="stats reveal">
+        <div class="stat"><div class="v">51,385</div><div class="l">hand instances</div><div class="s">41,909 train · 9,476 human-validated evaluation</div></div>
+        <div class="stat"><div class="v">32,646</div><div class="l">frames</div><div class="s">1408 × 1408 egocentric RGB, released at 5 Hz</div></div>
+        <div class="stat"><div class="v">68</div><div class="l">procedure recordings</div><div class="s">55 train · 13 held out</div></div>
+        <div class="stat"><div class="v">13</div><div class="l">tasks</div><div class="s">in 8 suturing, knot-tying and instrument families</div></div>
+        <div class="stat"><div class="v">4</div><div class="l">wearers</div><div class="s">3 training stages, one left-hand dominant</div></div>
+        <div class="stat"><div class="v">3</div><div class="l">glove colours</div><div class="s">blue, white and brown</div></div>
+        <div class="stat"><div class="v">21</div><div class="l">joints per hand</div><div class="s">3D, in the RGB camera's frame</div></div>
+        <div class="stat"><div class="v">8</div><div class="l">methods benchmarked</div><div class="s">zero-shot, 5 metrics, 95% CIs</div></div>
+      </div>
 
-  <!-- ================= ABSTRACT ================= -->
-  <section id="abstract">
-    <div class="wrap">
       <div class="section-head center reveal">
         <div class="eyebrow">Overview</div>
         <h2>Abstract</h2>
@@ -106,26 +122,132 @@
       <div class="abstract reveal">
         <p>We introduce EgoSurgHands, an egocentric 3D hand-pose dataset and benchmark for open-surgery training tasks captured with Meta Project Aria glasses on standard surgical training pads. To our knowledge, EgoSurgHands is the first benchmark for real-captured egocentric hand pose estimation in open-surgery training on synthetic pads. It contains 41,909 training hand-instance rows across 55 procedure recordings and 9,476 human-validated evaluation rows across 13 held-out procedure recordings from 4 wearers at a single site over two recording days, spanning 13 distinct tasks, 3 glove colors, and 3 stages of training. Each frame includes Aria intrinsics, MPS (Machine Perception Services) hand landmarks with per-hand confidence, timestamps, and eye gaze, plus SLAM extrinsics for the 35 of 68 recordings where SLAM succeeded. The primary benchmark uses sensor-fused, human-validated pseudo-ground truth: evaluation labels are derived from Aria MPS and validated through multi-rater human review with senior-surgeon adjudication, and they are not mocap-grade. The original adaptation split is within-corpus (procedure-disjoint, with shared wearers), which we complement with a leave-one-wearer-out evaluation and an external multi-view triangulated validation of the labels. We benchmark eight methods under zero-shot transfer, spanning MANO-based (HaMeR, WiLoR, WildHands, JointTransformer, SimpleHand, MeshGraphormer), two-hand (IntagHand), and keypoint-only (MediaPipe Hands) families. Within the evaluated model panel, backbones pretrained using egocentric data are associated with stronger zero-shot transfer, with JointTransformer achieving the best zero-shot result at 14.95 mm PA-MPJPE, and a substantial surgical-domain gap remains. As a lightweight diagnostic baseline for within-dataset adaptation, a 58K-parameter residual corrector (JRN) on frozen backbones reaches 10.96-14.85 mm PA-MPJPE on held-out wearers for the two ego-pretrained backbones. We release the dataset, benchmark code, checkpoints, and multi-rater annotation framework.</p>
       </div>
+    </div>
+  </section>
 
-      <div class="stats reveal">
-        <div class="stat"><div class="v">51,385</div><div class="l">hand instances</div><div class="s">41,909 train · 9,476 human-validated evaluation</div></div>
-        <div class="stat"><div class="v">68</div><div class="l">procedure recordings</div><div class="s">55 train · 13 held out</div></div>
-        <div class="stat"><div class="v">13</div><div class="l">tasks</div><div class="s">in 8 suturing, knot-tying and instrument families</div></div>
-        <div class="stat"><div class="v">4</div><div class="l">wearers</div><div class="s">3 training stages, one left-hand dominant</div></div>
-        <div class="stat"><div class="v">3</div><div class="l">glove colours</div><div class="s">blue, white and brown</div></div>
-        <div class="stat"><div class="v">8</div><div class="l">methods benchmarked</div><div class="s">zero-shot, 5 metrics, 95% CIs</div></div>
+  <!-- ================= THE RELEASE (EPIC-style connected cards) ================= -->
+  <section id="release" class="alt">
+    <div class="wrap">
+      <fieldset class="ecosystem reveal">
+        <legend>The release</legend>
+        <div class="bento">
+
+          <article class="card span-12 hcard">
+            <div class="pad">
+              <div class="meta-row"><span class="badge">Core data</span><span class="vchip">NeurIPS 2026</span><span class="vchip">E&amp;D Track</span><span class="vchip">CC BY-NC-SA 4.0</span></div>
+              <h3>EgoSurgHands dataset</h3>
+              <p>Four medical trainees, from a first-year medical student to a third-year resident, wore Project Aria glasses while suturing, tying knots, loading needles and cutting on synthetic skin pads. Evaluation labels were validated through multi-rater human review with senior-surgeon adjudication.</p>
+              <div class="mini-stats">
+                <div class="ms"><span class="v">51,385</span><span class="k">Hand instances</span></div>
+                <div class="ms"><span class="v">32,646</span><span class="k">Frames</span></div>
+                <div class="ms"><span class="v">68</span><span class="k">Recordings</span></div>
+                <div class="ms"><span class="v">13</span><span class="k">Tasks</span></div>
+                <div class="ms"><span class="v">4</span><span class="k">Trainees</span></div>
+                <div class="ms"><span class="v">3</span><span class="k">Glove colours</span></div>
+                <div class="ms"><span class="v">9,476</span><span class="k">Validated</span></div>
+                <div class="ms"><span class="v">21</span><span class="k">Joints / hand</span></div>
+              </div>
+              <div class="meta-row"><a class="btn primary sm" href="https://huggingface.co/datasets/aaditya/EgoSurgHands">Request access</a><a class="btn sm" href="#dataset">Quick start</a><a class="btn sm" href="#live">Watch more clips</a></div>
+            </div>
+            <div class="media on-dark">
+              <video id="corev" data-pr="PR123" muted loop playsinline preload="none"></video>
+              <span class="live"><i class="pulse"></i>LIVE</span>
+              <span class="media-tag">Simple interrupted + instrument tie · blue gloves</span>
+              <div class="hud" data-hud data-for="corev"></div>
+            </div>
+          </article>
+
+          <article class="card span-7"><div class="pad">
+            <div class="meta-row"><span class="badge">Benchmark</span><span class="vchip">8 methods</span><span class="vchip">5 metrics</span><span class="vchip">Leave-one-wearer-out</span></div>
+            <h3>Zero-shot leaderboard</h3>
+            <div class="lb" id="lb-mini"></div>
+            <p class="note">PA-MPJPE in mm on the 9,476 human-validated evaluation hands, zero-shot. Teal: pretrained on egocentric video. *Scored on the 24.1% of hands it detects.</p>
+            <a class="card-link" href="#benchmark">All five metrics, confidence intervals and JRN →</a>
+          </div></article>
+
+          <article class="card span-5"><div class="pad">
+            <div class="meta-row"><span class="badge">Labels</span><span class="vchip">MPS sensor fusion</span><span class="vchip">Human review</span></div>
+            <h3>Checked by people</h3>
+            <p>Training rows keep the MPS labels, gated at confidence 0.97. The 9,476 evaluation rows were validated through multi-rater review with senior-surgeon adjudication.</p>
+            <div class="review">
+              <div class="seg-bar" role="img" aria-label="43.1% accepted as-is, 51.9% drag-corrected, 5.1% rejected"><i style="width:43.1%;background:var(--teal)"></i><i style="width:51.9%;background:var(--blue)"></i><i style="width:5.1%;background:var(--accent)"></i></div>
+              <div class="legend-r"><span><i class="sw" style="background:var(--teal)"></i><b>43.1%</b> accepted as-is</span><span><i class="sw" style="background:var(--blue)"></i><b>51.9%</b> drag-corrected</span><span><i class="sw" style="background:var(--accent)"></i><b>5.1%</b> rejected</span></div>
+            </div>
+            <p>Median correction: <b style="color:var(--ink)">8.2 mm</b>.</p>
+            <a class="card-link" href="#labels">How good are the labels? →</a>
+          </div></article>
+
+          <article class="card span-6"><div class="pad">
+            <div class="meta-row"><span class="badge">Hardware</span><span class="vchip">Project Aria</span></div>
+            <h3>Captured with Project Aria</h3>
+            <div class="hw">
+              <img class="art" src="media/aria_glasses.webp" width="1235" height="503" alt="Project Aria (Gen 1) glasses">
+              <p>Research-edition glasses: a 1408 × 1408 fisheye RGB camera at 30 fps, two monochrome SLAM cameras, eye tracking, audio and IMUs. Meta's Machine Perception Services returns 21-joint hand landmarks at 30 Hz.</p>
+            </div>
+            <a class="card-link" href="#aria">Inside the glasses →</a>
+          </div></article>
+
+          <article class="card span-6"><div class="pad">
+            <div class="meta-row"><span class="badge">Validation</span><span class="vchip">External check</span></div>
+            <h3>Checked against a triangulated reference</h3>
+            <p>Two GoPros and an overhead iPhone, calibrated as one metric rig with a ChArUco board, recorded the tasks alongside the glasses.</p>
+            <div class="mini-stats">
+              <div class="ms"><span class="v">15.9 mm</span><span class="k">Median per joint</span></div>
+              <div class="ms"><span class="v">9.8 mm</span><span class="k">Per-hand aligned</span></div>
+              <div class="ms"><span class="v">562</span><span class="k">Hands</span></div>
+              <div class="ms"><span class="v">500</span><span class="k">Frames</span></div>
+            </div>
+            <p class="note">Closest at the MCP and PIP joints (12 to 17 mm), furthest at the fingertips (17 to 22 mm) and the wrist (25 mm), where the MPS and MANO joint definitions differ most.</p>
+          </div></article>
+
+        </div>
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- ================= LIVE TRACKING ================= -->
+  <section id="live">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow"><i class="pulse"></i>Live tracking</div>
+        <h2>The hands, as the glasses tracked them</h2>
+        <p class="lead">Aria RGB video at 30 fps with Meta's MPS 3D hand tracking projected onto every frame: the sensor output the labels are built from. Pick a task below.</p>
       </div>
+      <div class="player reveal">
+        <div class="screen on-dark">
+          <video id="pv" muted loop playsinline preload="none"></video>
+          <span class="live"><i class="pulse"></i>LIVE · MPS 3D hands → RGB</span>
+          <div class="hud" data-hud data-for="pv"></div>
+          <div class="cap" id="pv-cap"></div>
+        </div>
+        <aside class="side" aria-live="polite">
+          <div>
+            <span class="kicker">Now playing</span>
+            <h3 id="pv-title">Simple interrupted + instrument tie</h3>
+            <div class="meta-row" id="pv-meta" style="margin-top:8px"></div>
+          </div>
+          <canvas id="pv-3d" data-sync="pv" aria-label="The same two hands in 3D, turning slowly"></canvas>
+          <div class="hand-key"><span><i style="background:var(--hl)"></i>Left hand</span><span><i style="background:var(--hr)"></i>Right hand</span></div>
+          <p class="note">Above: the same hands in 3D, in the RGB camera's frame. The readout gives each wrist's distance from the RGB camera and the MPS tracking confidence, frame by frame. The released labels are sampled from this output at 5 Hz and gated at confidence 0.97; evaluation labels were then reviewed by people.</p>
+        </aside>
+      </div>
+      <div class="chips" id="pv-chips" aria-label="Choose a task"></div>
     </div>
   </section>
 
   <!-- ================= DATASET ================= -->
-  <section id="dataset">
+  <section id="dataset" class="alt">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Dataset</div>
         <h2>Surgical-training hands, from the wearer's point of view</h2>
         <p class="lead">Four medical trainees, from a first-year medical student to a third-year resident, wore Project Aria glasses while suturing, tying knots and cutting on synthetic skin pads. Meta's Machine Perception Services (MPS) turns each recording into 21-joint 3D hand landmarks, a SLAM trajectory, calibration and eye gaze, and every evaluation frame is then checked by people.</p>
       </div>
+
+      <figure class="figure-card paper reveal">
+        <img class="zoomable" src="assets/teaser.webp" width="2400" height="1148" loading="lazy" alt="Nine egocentric frames, one per surgical-training task family, each with hand-skeleton overlays and per-task statistics: number of frames, wearers, videos and duration.">
+        <figcaption><b>EgoSurgHands at a glance.</b> Eight surgical-training task families (13 task variants), four wearers, three experience tiers (MS1, PGY0, PGY3) and three glove colours, captured with Project Aria glasses (1408 × 1408 fisheye RGB). Click any figure to enlarge.</figcaption>
+      </figure>
 
       <figure class="figure-card paper reveal">
         <img class="zoomable" src="assets/pipeline.webp" width="1816" height="866" loading="lazy" alt="Five-stage pipeline: data capture with Aria glasses, MPS sensor fusion, projection and filtering, human validation, and the final train and evaluation splits.">
@@ -147,7 +269,7 @@
 
         <div class="panel reveal">
           <div class="subhead">Task families</div>
-          <div class="chips">
+          <div class="chips static">
             <span class="chip">Simple interrupted</span>
             <span class="chip">Figure-of-eight</span>
             <span class="chip">Horizontal mattress</span>
@@ -158,12 +280,14 @@
             <span class="chip">Cutting</span>
           </div>
 
-          <div class="subhead">Participants</div>
+          <div class="subhead">Participants and setting</div>
           <dl class="kv">
             <dt>Wearers</dt><dd>4, de-identified as P1 to P4; one left-hand dominant</dd>
             <dt>Stages</dt><dd>MS1, PGY0 and PGY3</dd>
             <dt>Gloves</dt><dd>blue, white and brown</dd>
-            <dt>Setting</dt><dd>one site, two recording days, synthetic skin pads</dd>
+            <dt>Setting</dt><dd>one site, two recording days, synthetic skin pads; no patients</dd>
+            <dt>Kit</dt><dd>needle drivers, toothed forceps, Metzenbaum and suture scissors; vicryl, silk and nylon sutures</dd>
+            <dt>Capture</dt><dd>RGB at 30 fps, frames released at 5 Hz (every 6th frame)</dd>
           </dl>
 
           <div class="subhead">Splits (procedure-disjoint)</div>
@@ -184,7 +308,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
   <section id="benchmark">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="eyebrow">Benchmark</div>
+        <div class="eyebrow">Benchmark · Leaderboard</div>
         <h2>Eight hand-pose methods, zero-shot</h2>
         <p class="lead">None of the methods sees surgical data during training. Each is scored against the human-validated labels of the 9,476 evaluation hand instances, on 20 joints, with 95% confidence intervals from a bootstrap over the 13 held-out recordings.</p>
       </div>
@@ -267,7 +391,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
   </section>
 
   <!-- ================= LEAVE ONE WEARER OUT ================= -->
-  <section id="wearers">
+  <section id="wearers" class="alt">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Generalisation</div>
@@ -289,6 +413,11 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
         </table>
       </div>
       <p class="table-note reveal">PA-MPJPE in mm, zero-shot → with JRN, on the held-out wearer. * The only cell where JRN does not improve the held-out wearer. P4, who wore all the brown gloves, is the hardest zero-shot fold for every backbone, and the two egocentric backbones reach 10.96 to 14.85 mm without having seen the evaluation wearer.</p>
+
+      <figure class="figure-card paper reveal" style="margin-top:26px">
+        <img class="zoomable" src="assets/per_stratum.webp" width="1312" height="469" loading="lazy" alt="Bar charts of PA-MPJPE for WildHands and JointTransformer, zero-shot and with JRN, by wearer (P1 to P4), glove colour (blue, white, brown) and experience tier (MS1, PGY0, PGY3).">
+        <figcaption><b>Per-stratum PA-MPJPE for WildHands and JointTransformer, zero-shot and with JRN</b> (original split). JRN lowers error in every stratum; P4 (all brown-glove hand instances, n = 661) is the hardest for both backbones. Glove colour, experience tier and wearer are confounded in the evaluation split, so stratum differences are not attributed to any single factor.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -324,24 +453,52 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
   </section>
 
   <!-- ================= QUALITATIVE ================= -->
-  <section id="qualitative">
+  <section id="qualitative" class="alt">
     <div class="wrap">
       <div class="section-head center reveal">
         <div class="eyebrow">Results</div>
         <h2>Qualitative results</h2>
       </div>
-      <figure class="figure-card qual reveal">
+      <figure class="figure-card paper reveal">
         <img class="zoomable" src="assets/qualitative.webp" width="1500" height="1500" loading="lazy" alt="Three rows of egocentric frames with blue, white and brown gloves; columns compare WildHands zero-shot, WildHands with JRN, and the MPS label.">
         <figcaption><b>WildHands zero-shot, WildHands with JRN, and the MPS label</b> (left to right), on frames covering the three glove colours. Overlays are Procrustes-aligned to the label to isolate shape error. The zero-shot prediction keeps an open-hand template that misses the surgical grip; JRN recovers it.</figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- ================= ANNOTATION TOOL ================= -->
-  <section id="tool">
+  <!-- ================= ARIA ================= -->
+  <section id="aria">
     <div class="wrap">
       <div class="section-head reveal">
-        <div class="eyebrow">Tooling <span class="tag" style="margin-left:6px">Release coming soon</span></div>
+        <div class="eyebrow">Hardware</div>
+        <h2>Inside the glasses</h2>
+        <p class="lead">Every recording comes from Meta's Project Aria research-edition glasses. The RGB camera supplies the frames; Meta's Machine Perception Services turns each session into the 3D hands. Hover a glowing sensor.</p>
+      </div>
+      <div class="aria-grid reveal">
+        <div class="diagram" id="diagram">
+          <img src="media/aria_diagram.webp" width="1840" height="810" loading="lazy" alt="Project Aria glasses with every sensor and its coordinate frame labelled: RGB camera, two SLAM cameras, two eye-tracking cameras, IMUs, microphones, barometer and magnetometer.">
+          <button class="hot rgb" type="button" style="left:59.29%;top:38.27%" data-tip="RGB camera|1408 × 1408 fisheye, 30 fps: every frame in the dataset" aria-label="RGB camera"></button>
+          <button class="hot slam" type="button" style="left:67.28%;top:45.31%" data-tip="SLAM camera, left|one of two monochrome cameras on the sides of the frame" aria-label="SLAM camera, left"></button>
+          <button class="hot slam" type="button" style="left:8.97%;top:31.48%" data-tip="SLAM camera, right|the second monochrome camera" aria-label="SLAM camera, right"></button>
+          <div class="tip" id="tip" role="status"></div>
+        </div>
+        <div>
+          <ul class="sensors">
+            <li><span class="dot" style="background:#FF6B3D"></span><div><b>RGB camera</b><span>1408 × 1408 video through a fisheye lens at 30 fps. Frames are released at 5 Hz (every 6th frame); 2D labels use a pinhole approximation (f = 606.5, c = 704).</span></div></li>
+            <li><span class="dot" style="background:#4FD6C6"></span><div><b>Two SLAM cameras</b><span>Monochrome cameras on either side of the frame, alongside eye tracking, audio and IMUs.</span></div></li>
+            <li><span class="dot" style="background:var(--blue)"></span><div><b>Machine Perception Services</b><span>Each session goes to Meta MPS, which returns the SLAM trajectory, 21-joint hand landmarks at 30 Hz, eye-gaze direction and a semi-dense point cloud.</span></div></li>
+          </ul>
+          <p class="credit">Diagram: Project Aria documentation (projectaria_tools, Meta), colours inverted in the dark theme.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ANNOTATION TOOL ================= -->
+  <section id="tool" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Tooling <span class="tag">Release coming soon</span></div>
         <h2>Multi-rater annotation tool</h2>
         <p class="lead">Evaluation frames were reviewed in a browser-based tool. Raters toggle every skeleton overlay, accept, drag-correct or reject each frame, and leave notes. Frames come in bundles of 1,000 that several raters can open independently, which supports the agreement audit.</p>
       </div>
@@ -371,6 +528,42 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
         <li>The original split shares wearers and days; the leave-one-wearer-out protocol addresses this for JRN.</li>
         <li>All brown-glove frames come from one wearer, so glove colour and wearer are confounded for that stratum.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section id="faq" class="alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Questions</div>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Was this recorded during real surgery?</summary>
+          <p>No. Every recording is a surgical-training task on a synthetic skin pad with a standard suturing kit, at one site over two recording days. There are no patients and no protected health information.</p>
+        </details>
+        <details>
+          <summary>How do I get the data?</summary>
+          <p>Request access on the <a href="https://huggingface.co/datasets/aaditya/EgoSurgHands">Hugging Face dataset page</a>; requests are reviewed by hand. Once approved, log in with <code>huggingface-cli login</code> and load it with the <code>datasets</code> library, as in the snippet in the Dataset section.</p>
+        </details>
+        <details>
+          <summary>What licence does it use?</summary>
+          <p>CC BY-NC-SA 4.0: free for non-commercial use with attribution, and anything derived from it must be shared under the same licence.</p>
+        </details>
+        <details>
+          <summary>How accurate are the labels?</summary>
+          <p>They are sensor-fused pseudo-ground truth, not motion capture. Human corrections, model consensus and an external triangulated rig all put their resolution at about 1 cm. That is fine enough to compare methods zero-shot, where errors span 15 to 30 mm, but not to rank models after JRN correction.</p>
+        </details>
+        <details>
+          <summary>Who are the wearers?</summary>
+          <p>Four medical trainees, de-identified as P1 to P4: a first-year medical student (MS1), a PGY0 and two PGY3 residents. One of them is left-hand dominant.</p>
+        </details>
+        <details>
+          <summary>What are the videos at the top of this page?</summary>
+          <p>Raw Aria RGB footage from the recordings, undistorted to the dataset's pinhole camera, with Meta's MPS 3D hand landmarks projected onto every frame at 30 fps (left hand blue, right hand green). The dataset itself releases every 6th frame with the labels described above.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -409,7 +602,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
   </section>
 
   <!-- ================= CITATION ================= -->
-  <section id="citation">
+  <section id="citation" class="alt">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Citation</div>
@@ -439,6 +632,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
 <footer>
   <div class="wrap">
     <p class="ack">We thank Nebius for providing GPU compute. Recordings use Project Aria glasses and Machine Perception Services from Meta.</p>
+    <p>Glasses drawing and sensor diagram: Project Aria documentation (projectaria_tools, Meta). Hand overlays: Aria MPS hand tracking, drawn with the lab's MPS overlay renderer.</p>
     <p>Dataset licence CC BY-NC-SA 4.0 · <a href="https://github.com/monk1337/egoSurgHands/issues">Questions and issues</a></p>
   </div>
 </footer>
