@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
-  <link rel="stylesheet" href="style.css?v=20261118a">
+  <link rel="stylesheet" href="style.css?v=20261118b">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("esh-theme"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -40,73 +40,52 @@
       <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
       <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
     </button>
+    <button class="menu-btn" type="button" aria-label="Sections menu" aria-expanded="false" aria-controls="mnav">
+      <svg class="open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
   </div>
+  <nav class="mnav wrap" id="mnav" aria-label="All sections" hidden>
+    <a href="#overview">Overview</a>
+    <a href="#release">The release</a>
+    <a href="#live">Live tracking</a>
+    <a href="#dataset">Dataset</a>
+    <a href="#benchmark">Benchmark</a>
+    <a href="#wearers">Unseen wearers</a>
+    <a href="#labels">Label quality</a>
+    <a href="#aria">Inside the glasses</a>
+    <a href="#faq">FAQ</a>
+    <a href="#resources">Data and code</a>
+    <a href="#citation">Cite</a>
+    <a href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands">Request access ↗</a>
+  </nav>
 </header>
 
 <main id="top">
 
-  <!-- ================= HERO: live video wall ================= -->
-  <section class="hero on-dark" aria-label="EgoSurgHands">
-    <div class="wall" aria-hidden="true"><video id="wall" muted loop playsinline preload="auto"></video></div>
-    <div class="shade" aria-hidden="true"></div>
-    <div class="wrap hero-inner">
-      <span class="venue"><svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l2.5 8 8 2.5-8 2.5-2.5 8-2.5-8-8-2.5 8-2.5z"/></svg><span class="venue-text">NeurIPS 2026</span></span>
-      <h1 class="title">EgoSurgHands</h1>
-      <div class="glasses">
-        <img src="media/aria_glasses.webp" width="1235" height="503" alt="Line drawing of the Project Aria (Gen 1) glasses used for every recording">
-        <i class="cam rgb" style="left:51.82%;top:44.14%" title="RGB camera"></i>
-        <i class="cam slam" style="left:61.54%;top:55.07%" title="SLAM camera"></i>
+  <!-- ================= HERO: the paper, the glasses, and what they saw ================= -->
+  <section class="stage on-dark" id="live" aria-label="EgoSurgHands">
+    <div class="stage-in">
+      <header class="hd">
+        <div class="mark"><div class="gl"><img src="media/aria_glasses.webp" width="1235" height="503" alt="Line drawing of the Project Aria (Gen 1) glasses used for every recording"><i class="cam rgb" style="left:51.82%;top:44.14%" title="RGB camera"></i><i class="cam slam" style="left:61.54%;top:55.07%" title="SLAM camera"></i></div><span class="vb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l2.5 8 8 2.5-8 2.5-2.5 8-2.5-8-8-2.5 8-2.5z"/></svg><span>NeurIPS 2026</span></span></div>
+        <h1 class="name">EgoSurgHands</h1>
+        <p class="sub">An Egocentric 3D Hand Pose Dataset &amp; Benchmark for Open-Surgery Training</p>
+        <p class="by"><span>Ankit Pal<sup>1</sup></span><span>Guillaume Kugener<sup>2</sup></span><span>Sofia Volpi<sup>2</sup></span><span>Joshua Schwartz<sup>2</sup></span><span>Alex Idarraga<sup>2</sup></span><span class="sr" title="Equal senior authorship"><span>Pranav Rajpurkar<sup>1,†</sup></span><span>Gabriel A Brat<sup>1,2,†</sup></span></span></p>
+        <p class="af"><a class="inst" href="https://hms.harvard.edu" target="_blank" rel="noopener"><sup>1</sup><img class="hms" src="media/logos/hms_shield.svg" width="170" height="197" alt=""><span>Harvard Medical School</span></a><a class="inst" href="https://www.bidmc.org" target="_blank" rel="noopener"><sup>2</sup><img class="bidmc" src="media/logos/bidmc_light.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"></a><span class="eq"><sup>†</sup>Equal senior authorship</span></p>
+        <div class="cta"><a class="pb" href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands"><span aria-hidden="true">🤗</span>Dataset</a><a class="gb" href="https://github.com/monk1337/egoSurgHands"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Code</a><span class="tl"><span class="soon">Paper<em>soon</em></span><a href="#benchmark">Leaderboard</a><a href="#citation">BibTeX</a></span></div>
+      </header>
+      <div class="console">
+        <div class="tasks dm-card"><span class="eb">Tasks</span><div class="tlist" id="hv-list" aria-label="Choose a task"></div></div>
+        <div class="scr"><video id="hv" muted loop playsinline preload="none" poster="media/PR143_full960.jpg"></video><div class="tags" id="hv-tags"></div><span class="live"><i class="pulse"></i>LIVE · what the RGB camera saw</span><div class="cap" id="hv-cap">Simple interrupted + instrument tie&nbsp;· white&nbsp;gloves</div></div>
+        <div class="cside dm-card"><span class="eb">Same hands, in 3D</span><canvas class="d3" id="hv-3d" data-sync="hv" aria-label="The same two hands in 3D, turning slowly"></canvas><div class="reads"><div class="read l"><span class="k">Left wrist</span><b id="hv-rl">--</b><span class="u" id="hv-cl"></span></div><div class="read r"><span class="k">Right wrist</span><b id="hv-rr">--</b><span class="u" id="hv-cr"></span></div></div></div>
       </div>
-      <p class="subtitle">An Egocentric 3D Hand Pose Dataset &amp; Benchmark for <span class="nw">Open-Surgery Training</span></p>
-      <div class="authors">
-        <div class="arow">
-          <span>Ankit Pal<sup>1</sup></span>
-          <span>Guillaume Kugener<sup>2</sup></span>
-          <span>Sofia Volpi<sup>2</sup></span>
-          <span>Joshua Schwartz<sup>2</sup></span>
-          <span>Alex Idarraga<sup>2</sup></span>
-        </div>
-        <div class="arow senior" aria-label="Senior authors">
-          <span>Pranav Rajpurkar<sup>1,†</sup></span>
-          <span>Gabriel A Brat<sup>1,2,†</sup></span>
-        </div>
-      </div>
-      <div class="affils">
-        <span><sup>1</sup>Department of Biomedical Informatics, Harvard Medical School</span>
-        <span><sup>2</sup>Department of Surgery, Beth Israel Deaconess Medical Center</span>
-        <span><sup>†</sup>Equal senior authorship</span>
-      </div>
-      <div class="insts hero-insts" aria-label="Affiliations">
-        <a href="https://hms.harvard.edu" target="_blank" rel="noopener" class="i-hms"><img src="media/logos/hms_shield.svg" width="170" height="197" alt=""><span>Harvard Medical School</span></a>
-        <a href="https://www.bidmc.org" target="_blank" rel="noopener" class="i-bidmc"><img src="media/logos/bidmc_light.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"></a>
-      </div>
-      <div class="actions">
-        <span class="btn soon" aria-disabled="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2.8H6.8A1.8 1.8 0 0 0 5 4.6v14.8a1.8 1.8 0 0 0 1.8 1.8h10.4a1.8 1.8 0 0 0 1.8-1.8V7.8z"/><path d="M14 2.8v5h5M8.5 13h7M8.5 16.6h4.6"/></svg>
-          Paper <span class="tag">Soon</span>
-        </span>
-        <a class="btn" href="https://github.com/monk1337/egoSurgHands">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          Code
-        </a>
-        <a class="btn" href="https://huggingface.co/datasets/aaditya/EgoSurgHands"><span class="emoji" aria-hidden="true">🤗</span>Dataset</a>
-        <a class="btn" href="#benchmark">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg>
-          Leaderboard
-        </a>
-        <a class="btn" href="#citation">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6.5H6.2A1.7 1.7 0 0 0 4.5 8.2v3.3a1.7 1.7 0 0 0 1.7 1.7h3.3V17a3 3 0 0 1-3 3M19.5 6.5h-3.3a1.7 1.7 0 0 0-1.7 1.7v3.3a1.7 1.7 0 0 0 1.7 1.7h3.3V17a3 3 0 0 1-3 3"/></svg>
-          BibTeX
-        </a>
-      </div>
-      <span class="live"><i class="pulse"></i>Live · Aria MPS 3D hand tracking on the glasses' own video, 30 fps</span>
     </div>
   </section>
 
   <!-- ================= OVERVIEW ================= -->
   <section id="overview">
     <div class="wrap">
-      <p class="tldr reveal"><b>TL;DR</b>To our knowledge, the first benchmark for real-captured egocentric 3D hand pose in open-surgery training: 51,385 hand instances recorded with Project Aria glasses, human-validated evaluation labels, and eight hand-pose methods tested zero-shot.</p>
+      <p class="tldr abs reveal"><b>Abstract</b>To our knowledge, the first benchmark for real-captured egocentric 3D hand pose in open-surgery training. Four medical trainees wore Project Aria glasses while suturing, tying knots and cutting: 41,909 training and 9,476 human-validated evaluation hand instances. Across eight methods tested zero-shot, a substantial surgical-domain gap remains (best: JointTransformer, 14.95 mm PA-MPJPE), and a 58K-parameter corrector (JRN) on frozen ego-pretrained backbones reaches 10.96 to 14.85 mm on held-out wearers.</p>
 
       <div class="stats reveal">
         <div class="stat"><div class="v">51,385</div><div class="l">hand instances</div><div class="s">41,909 train · 9,476 human-validated evaluation</div></div>
@@ -151,7 +130,7 @@
                 <div class="ms"><span class="v">9,476</span><span class="k">Validated</span></div>
                 <div class="ms"><span class="v">21</span><span class="k">Joints / hand</span></div>
               </div>
-              <div class="meta-row"><a class="btn primary sm" href="https://huggingface.co/datasets/aaditya/EgoSurgHands">Request access</a><a class="btn sm" href="#dataset">Quick start</a><a class="btn sm" href="#live">Watch more clips</a></div>
+              <div class="meta-row"><a class="btn primary sm" href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands">Request access</a><a class="btn sm" href="#dataset">Quick start</a><a class="btn sm" href="#live">Watch more clips</a></div>
             </div>
             <div class="media on-dark">
               <video id="corev" data-pr="PR123" muted loop playsinline preload="none"></video>
@@ -206,36 +185,6 @@
 
         </div>
       </fieldset>
-    </div>
-  </section>
-
-  <!-- ================= LIVE TRACKING ================= -->
-  <section id="live">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow"><i class="pulse"></i>Live tracking</div>
-        <h2>The hands, as the glasses tracked them</h2>
-        <p class="lead">Aria RGB video at 30 fps with Meta's MPS 3D hand tracking projected onto every frame: the sensor output the labels are built from. Pick a task below.</p>
-      </div>
-      <div class="player reveal">
-        <div class="screen on-dark">
-          <video id="pv" muted loop playsinline preload="none"></video>
-          <span class="live"><i class="pulse"></i>LIVE · MPS 3D hands → RGB</span>
-          <div class="hud" data-hud data-for="pv"></div>
-          <div class="cap" id="pv-cap"></div>
-        </div>
-        <aside class="side" aria-live="polite">
-          <div>
-            <span class="kicker">Now playing</span>
-            <h3 id="pv-title">Simple interrupted + instrument tie</h3>
-            <div class="meta-row" id="pv-meta" style="margin-top:8px"></div>
-          </div>
-          <canvas id="pv-3d" data-sync="pv" aria-label="The same two hands in 3D, turning slowly"></canvas>
-          <div class="hand-key"><span><i style="background:var(--hl)"></i>Left hand</span><span><i style="background:var(--hr)"></i>Right hand</span></div>
-          <p class="note">Above: the same hands in 3D, in the RGB camera's frame. The readout gives each wrist's distance from the RGB camera and the MPS tracking confidence, frame by frame. The released labels are sampled from this output at 5 Hz and gated at confidence 0.97; evaluation labels were then reviewed by people.</p>
-        </aside>
-      </div>
-      <div class="chips" id="pv-chips" aria-label="Choose a task"></div>
     </div>
   </section>
 
@@ -304,7 +253,7 @@
 
       <pre class="code reveal" aria-label="Loading the dataset with the Hugging Face datasets library"><span class="k">from</span> datasets <span class="k">import</span> load_dataset
 
-ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="c"># splits: train, validation (request access on the dataset page, then huggingface-cli login)</span></pre>
+ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <span class="c"># splits: train, validation (request access on the dataset page, then huggingface-cli login)</span></pre>
     </div>
   </section>
 
@@ -364,6 +313,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
       <div class="table-title reveal">
         <h3>All five metrics</h3>
         <span>Zero-shot / with JRN · mm, except PA-P2D in px</span>
+        <span class="swipe-hint">Swipe the table sideways for every metric →</span>
       </div>
       <div class="table-wrap reveal">
         <table class="results wide">
@@ -402,6 +352,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
         <h2>Leave one wearer out</h2>
         <p class="lead">The original split keeps procedures apart but shares wearers. Here each wearer is held out in turn: JRN is retrained on the other three wearers' training rows, and the backbones stay zero-shot.</p>
       </div>
+      <p class="swipe-hint reveal">Swipe the table sideways for all four wearers →</p>
       <div class="table-wrap reveal">
         <table class="results lowo">
           <thead>
@@ -549,7 +500,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
         </details>
         <details>
           <summary>How do I get the data?</summary>
-          <p>Request access on the <a href="https://huggingface.co/datasets/aaditya/EgoSurgHands">Hugging Face dataset page</a>; requests are reviewed by hand. Once approved, log in with <code>huggingface-cli login</code> and load it with the <code>datasets</code> library, as in the snippet in the Dataset section.</p>
+          <p>Request access on the <a href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands">Hugging Face dataset page</a>; requests are reviewed by hand. Once approved, log in with <code>huggingface-cli login</code> and load it with the <code>datasets</code> library, as in the snippet in the Dataset section.</p>
         </details>
         <details>
           <summary>What licence does it use?</summary>
@@ -579,11 +530,11 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
         <h2>Get the data and code</h2>
       </div>
       <div class="res">
-        <a class="card reveal" href="https://huggingface.co/datasets/aaditya/EgoSurgHands">
+        <a class="card reveal" href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands">
           <div class="top"><span class="emoji" aria-hidden="true">🤗</span><span class="tag">CC BY-NC-SA 4.0</span></div>
           <h3>Dataset</h3>
           <p>Frames, 3D hand labels, calibration, eye gaze and metadata, with Croissant metadata and a datasheet.</p>
-          <div class="url">huggingface.co/<wbr>datasets/<wbr>aaditya/<wbr>EgoSurgHands</div>
+          <div class="url">huggingface.co/<wbr>datasets/<wbr>surgicalinformatics/<wbr>EgoSurgHands</div>
         </a>
         <a class="card reveal" href="https://github.com/monk1337/egoSurgHands">
           <div class="top"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></div>
@@ -638,7 +589,7 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
     <p class="ack">We thank Nebius for providing GPU compute. Recordings use Project Aria glasses and Machine Perception Services from Meta.</p>
     <p>Glasses drawing and sensor diagram: Project Aria documentation (projectaria_tools, Meta). Hand overlays: Aria MPS hand tracking, drawn with the lab's MPS overlay renderer.</p>
     <p>Dataset licence CC BY-NC-SA 4.0 · <a href="https://github.com/monk1337/egoSurgHands/issues">Questions and issues</a></p>
-    <div class="insts foot-insts" aria-label="Affiliations">
+    <div class="insts" aria-label="Affiliations">
       <a href="https://hms.harvard.edu" target="_blank" rel="noopener" class="i-hms"><img src="media/logos/hms_shield.svg" width="170" height="197" alt=""><span>Harvard Medical School</span></a>
       <a href="https://www.bidmc.org" target="_blank" rel="noopener" class="i-bidmc"><img class="lt" src="media/logos/bidmc.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"><img class="dk" src="media/logos/bidmc_light.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"></a>
     </div>
@@ -648,6 +599,6 @@ ds = load_dataset(<span class="s">"aaditya/EgoSurgHands"</span>)   <span class="
 <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
 <div class="lightbox" id="lightbox" aria-hidden="true"><img alt=""></div>
 
-<script src="main.js?v=20261118a" defer></script>
+<script src="main.js?v=20261118b" defer></script>
 </body>
 </html>

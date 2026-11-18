@@ -1,5 +1,5 @@
-/* EgoSurgHands project page: theme, live video wall and clips, MPS readouts and 3D hands,
-   benchmark chart, copy, reveal, lightbox. No dependencies. */
+/* EgoSurgHands project page: theme, the hero console (tasks, live clip with wrist labels, 3D hands),
+   clips and MPS readouts, benchmark chart, copy, reveal, lightbox. No dependencies. */
 (function () {
   "use strict";
   var root = document.documentElement;
@@ -13,6 +13,16 @@
       root.dataset.theme = next;
       try { localStorage.setItem("esh-theme", next); } catch (e) { /* storage unavailable */ }
     });
+  }
+
+  /* ---------- phone menu ---------- */
+  var menuBtn = document.querySelector(".menu-btn"), mnav = document.getElementById("mnav");
+  if (menuBtn && mnav) {
+    var setMenu = function (open) { mnav.hidden = !open; menuBtn.setAttribute("aria-expanded", open ? "true" : "false"); };
+    menuBtn.addEventListener("click", function () { setMenu(mnav.hidden); });
+    mnav.addEventListener("click", function (e) { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
+    window.addEventListener("resize", function () { if (window.innerWidth > 760) setMenu(false); });
   }
 
   /* ---------- clips: Aria RGB at 30 fps with MPS 3D hands drawn by the lab's overlay renderer ---------- */
@@ -56,13 +66,6 @@
   }, { threshold: 0.12 }) : null;
   function watch(v) { if (vio) vio.observe(v); else play(v); }
 
-  var wall = document.getElementById("wall");
-  if (wall) {
-    var small = window.innerWidth < 720;
-    wall.poster = "media/" + (small ? "wall_m" : "wall") + ".jpg";
-    if (!reduce) wall.src = "media/" + (small ? "wall_m" : "wall") + ".mp4";
-    watch(wall);
-  }
   var corev = document.getElementById("corev");
   if (corev) { setClip(corev, corev.dataset.pr); watch(corev); }
   window.addEventListener("resize", function () { document.querySelectorAll("video[data-pr]").forEach(fitPos); });
@@ -112,7 +115,7 @@
     if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
     var cx = cv.getContext("2d");
     cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, w, h);
-    var light = root.dataset.theme === "light";
+    var light = root.dataset.theme === "light" && !cv.closest(".on-dark");
     cx.strokeStyle = light ? "rgba(53,103,190,.14)" : "rgba(127,166,232,.14)"; cx.lineWidth = 1;
     for (var g = -5; g <= 5; g++) { cx.beginPath(); cx.moveTo(w / 2 + g * w / 11, h * .8); cx.lineTo(w / 2 + g * w / 5, h); cx.stroke(); }
     if (!d) return;
@@ -142,7 +145,10 @@
     document.getElementById("pv-title").textContent = c.task;
     document.getElementById("pv-cap").textContent = c.task;
     document.getElementById("pv-meta").innerHTML = '<span class="vchip"><i class="gdot" style="display:inline-block;vertical-align:-1px;margin-right:6px;background:' + GLOVE[c.glove] + '"></i>' + c.glove + ' gloves</span><span class="vchip">' + c.pr + "</span>";
-    chipsEl.querySelectorAll(".chip-btn").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.pr === pr ? "true" : "false"); });
+    chipsEl.querySelectorAll(".chip-btn").forEach(function (b) {
+      var on = b.dataset.pr === pr; b.setAttribute("aria-pressed", on ? "true" : "false");
+      if (on && chipsEl.scrollWidth > chipsEl.clientWidth) chipsEl.scrollTo({ left: b.offsetLeft - 16, behavior: reduce ? "auto" : "smooth" });
+    });
   }
   if (pv && chipsEl) {
     chipsEl.innerHTML = CLIPS.map(function (c) {
@@ -153,15 +159,122 @@
     watch(pv);
   }
 
+
+  /* ---------- hero console: tasks | live RGB with labels that follow each wrist | the same hands in 3D ---------- */
+  /* Simple interrupted (white gloves) first and playing by default; short names grouped by suture; the glove tag tells repeats apart. */
+  var HERO = [
+    { pr: "PR143", name: "Simple interrupted" },
+    { pr: "PR123", name: "Simple interrupted" },
+    { pr: "PR116", name: "Figure-of-8", grp: 1 },
+    { pr: "PR128", name: "Figure-of-8" },
+    { pr: "PR184", name: "Figure-of-8" },
+    { pr: "PR132", name: "Horizontal mattress", grp: 1 },
+    { pr: "PR117", name: "Vertical mattress" },
+    { pr: "PR122", name: "Running subcuticular" },
+    { pr: "PR115", name: "Two-hand tie", grp: 1 },
+    { pr: "PR175", name: "Needle loading" },
+    { pr: "PR174", name: "Cutting" }
+  ];
+  var hv = document.getElementById("hv"), hList = document.getElementById("hv-list"), hTags = document.getElementById("hv-tags");
+  var hOut = { cap: document.getElementById("hv-cap"), rl: document.getElementById("hv-rl"), rr: document.getElementById("hv-rr"), cl: document.getElementById("hv-cl"), cr: document.getElementById("hv-cr") };
+  var stage = hv ? hv.closest(".stage") : null, hz = 1; /* hz: the CSS zoom on square screens (--z) */
+  /* fade the bottom of the task list only while more tasks are hidden below */
+  function moreFlag() {
+    if (!hList) return;
+    var more = hList.scrollHeight > hList.clientHeight + 2 && hList.scrollWidth <= hList.clientWidth + 2;
+    hList.classList.toggle("more", more);
+    hList.classList.toggle("end", more && hList.scrollTop + hList.clientHeight >= hList.scrollHeight - 4);
+  }
+  function heroSelect(pr, user) {
+    var c = clip(pr); if (!c || !hv) return;
+    setClip(hv, pr);
+    if (visible.has(hv)) play(hv);
+    if (hOut.cap) hOut.cap.textContent = c.task + "\u00a0· " + c.glove + "\u00a0gloves";
+    hList.querySelectorAll("[data-pr]").forEach(function (b) {
+      var on = b.dataset.pr === pr; b.setAttribute("aria-pressed", on ? "true" : "false");
+      if (on && user && hList.scrollWidth > hList.clientWidth + 2) hList.scrollTo({ left: b.offsetLeft - 12, behavior: reduce ? "auto" : "smooth" });
+    });
+  }
+  if (hv && hList && hTags) {
+    hList.innerHTML = HERO.map(function (h) {
+      var c = clip(h.pr);
+      return '<button class="ti' + (h.grp ? " grp" : "") + '" type="button" data-pr="' + h.pr + '" aria-pressed="false" title="' + c.task + ", " + c.glove + ' gloves"><i class="gdot" style="background:' + GLOVE[c.glove] + '"></i><span class="nm">' + h.name + "</span><em>" + c.glove + "</em></button>";
+    }).join("");
+    hList.addEventListener("click", function (e) { var b = e.target.closest("[data-pr]"); if (b) heroSelect(b.dataset.pr, true); });
+    hList.addEventListener("scroll", moreFlag, { passive: true });
+    hTags.innerHTML = '<div class="wtag l" style="opacity:0"><i></i><b></b></div><div class="wtag r" style="opacity:0"><i></i><b></b></div>';
+    heroSelect("PR143", false);
+    watch(hv);
+  }
+  /* camera-frame wrist -> pixel in the 960 px clip (the dashboard's projection) -> the box under object-fit: cover */
+  function toVideo(p) { var u = 606.5 * p[0] / p[2] + 704, w = 606.5 * p[1] / p[2] + 704; return [(1407 - w - 0.3) * 960 / 1408, (u - 10.7) * 960 / 1408]; }
+  function toBox(v, pt) {
+    var W = v.clientWidth, H = v.clientHeight, c = Math.max(W / 960, H / 960), D = 960 * c;
+    var op = (v.style.objectPosition || "50% 50%").split(" "), px = parseFloat(op[0]) / 100, py = parseFloat(op[1]) / 100;
+    if (isNaN(px)) px = 0.5; if (isNaN(py)) py = 0.5;
+    return [(W - D) * px + pt[0] * c, (H - D) * py + pt[1] * c];
+  }
+  /* 3D joints are stored every other frame; interpolate the wrist in between so the labels move smoothly */
+  function wristAt(d, k, s) {
+    var T = d.telemetry, r = T[k];
+    if (r && r[s] && r[s].j3 && r[s].j3[0]) return r[s].j3[0];
+    var a = T[k - 1], b = T[k + 1], wa = a && a[s] && a[s].j3 && a[s].j3[0], wb = b && b[s] && b[s].j3 && b[s].j3[0];
+    if (wa && wb) return [(wa[0] + wb[0]) / 2, (wa[1] + wb[1]) / 2, (wa[2] + wb[2]) / 2];
+    return wa || wb || null;
+  }
+  function heroFrame() {
+    if (!hv || !hTags || !visible.has(hv)) return;
+    var d = TEL[hv.dataset.pr]; if (!d) return;
+    var k = frameOf(hv, d), r = d.telemetry[k] || {};
+    hOut.rl.textContent = r.left ? r.left.d.toFixed(1) : "--";
+    hOut.rr.textContent = r.right ? r.right.d.toFixed(1) : "--";
+    hOut.cl.textContent = r.left ? "cm from lens · conf " + r.left.conf.toFixed(2) : "not tracked";
+    hOut.cr.textContent = r.right ? "cm from lens · conf " + r.right.conf.toFixed(2) : "not tracked";
+    var W = hv.clientWidth, H = hv.clientHeight;
+    ["left", "right"].forEach(function (s, i) {
+      var el = hTags.children[i], w = wristAt(d, k, s);
+      if (!w || !r[s]) { el.style.opacity = 0; return; }
+      var p = toBox(hv, toVideo(w)), zx = W / 2 + hz * (p[0] - W / 2), zy = H / 2 + hz * (p[1] - H / 2);
+      if (zx < 18 || zx > W - 18 || zy < 18 || zy > H - 18) { el.style.opacity = 0; return; }
+      el.style.opacity = 1;
+      el.style.transform = "translate(" + p[0].toFixed(1) + "px," + p[1].toFixed(1) + "px)";
+      el.querySelector("b").textContent = (s === "left" ? "L" : "R") + " wrist · " + r[s].d.toFixed(1) + " cm";
+      el.classList.toggle("down", zy < 84);
+      el.classList.toggle("flip", s === "left" ? zx < 150 : zx > W - 150);
+    });
+  }
+  /* keep the clip at about 16:10: the screen's column is min(free width, console height x 1.6); phones show it square */
+  var phoneMq = window.matchMedia("(max-width: 760px)");
+  function fitConsole() {
+    var con = stage.querySelector(".console"); if (!con) return;
+    con.style.gridTemplateColumns = "";
+    if (phoneMq.matches) return;
+    var gap = parseFloat(getComputedStyle(con).columnGap) || 14, sw = Math.max(260, Math.min(con.clientWidth - 216 - 232 - 2 * gap, con.clientHeight * 1.6));
+    con.style.gridTemplateColumns = "216px " + Math.floor(sw) + "px 232px";
+  }
+  function heroLayout() { if (!stage) return; fitConsole(); hz = parseFloat(getComputedStyle(hv).getPropertyValue("--z")) || 1; fitPos(hv); moreFlag(); }
+  if (stage) {
+    var hrt = 0;
+    window.addEventListener("resize", function () { clearTimeout(hrt); hrt = setTimeout(heroLayout, 80); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(heroLayout);
+    window.addEventListener("load", heroLayout);
+    heroLayout();
+  }
+
   /* ---------- the animation loop: readouts and 3D views of the clips in view ---------- */
   var canvases = document.querySelectorAll("canvas[data-sync]");
-  function loop(t) { updateHuds(); canvases.forEach(function (cv) { draw3d(cv, t); }); requestAnimationFrame(loop); }
+  function loop(t) { updateHuds(); heroFrame(); canvases.forEach(function (cv) { draw3d(cv, t); }); requestAnimationFrame(loop); }
   requestAnimationFrame(loop);
 
   /* ---------- Aria diagram hotspots ---------- */
   var tipEl = document.getElementById("tip");
   document.querySelectorAll("#diagram .hot").forEach(function (h) {
-    function show() { var parts = h.dataset.tip.split("|"); tipEl.innerHTML = "<b>" + parts[0] + "</b>" + parts[1]; tipEl.style.left = h.style.left; tipEl.style.top = h.style.top; tipEl.classList.add("show"); }
+    function show() {
+      var parts = h.dataset.tip.split("|");
+      tipEl.innerHTML = "<b>" + parts[0] + "</b>" + parts[1];
+      var box = tipEl.parentElement.clientWidth, x = parseFloat(h.style.left) / 100 * box, half = tipEl.offsetWidth / 2;
+      tipEl.style.left = Math.min(box - half - 4, Math.max(half + 4, x)) + "px"; tipEl.style.top = h.style.top; tipEl.classList.add("show");
+    }
     function hide() { tipEl.classList.remove("show"); }
     h.addEventListener("mouseenter", show); h.addEventListener("focus", show); h.addEventListener("click", show);
     h.addEventListener("mouseleave", hide); h.addEventListener("blur", hide);
@@ -241,7 +354,7 @@
     if (top + hgt > vh - 10) top = y - hgt - 14;
     tip.style.left = Math.max(10, left) + "px"; tip.style.top = Math.max(10, top) + "px";
   }
-  function hideTip() { tip.classList.remove("show"); }
+  function hideTip() { if (tip) tip.classList.remove("show"); }
 
   function render() {
     if (!host) return;
