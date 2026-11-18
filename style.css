@@ -384,3 +384,28 @@ footer p { margin: 0 0 8px; max-width: 900px; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .pulse, .cam::after, .hot::after, .venue::before, .venue .spark { animation: none; }
 }
+
+/* institution logos */
+.insts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; }
+.insts a { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; opacity: .9; transition: opacity .15s; }
+.insts a:hover { opacity: 1; text-decoration: none; }
+.insts img { display: block; width: auto; }
+.insts .i-hms span { font: 600 15px/1.1 var(--display); white-space: nowrap; }
+.hero-insts { justify-content: center; margin-top: 2px; }
+.hero-insts a { color: #E6EBF5; }
+.hero-insts .i-hms img { height: 30px; }
+.hero-insts .i-bidmc img { height: 30px; }
+.foot-insts { margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line); }
+.foot-insts a { color: var(--ink); }
+.foot-insts .i-hms img { height: 40px; }
+.foot-insts .i-hms span { font-size: 16px; }
+.foot-insts .i-bidmc img { height: 32px; }
+.foot-insts .i-bidmc .lt { display: none; }
+:root[data-theme="light"] .foot-insts .i-bidmc .lt { display: block; }
+:root[data-theme="light"] .foot-insts .i-bidmc .dk { display: none; }
+@media (max-width: 640px) {
+  .hero-insts { gap: 10px 22px; }
+  .hero-insts .i-hms img { height: 24px; }
+  .hero-insts .i-bidmc img { height: 25px; }
+  .insts .i-hms span { font-size: 13.5px; }
+}
