@@ -68,6 +68,61 @@
 
   var corev = document.getElementById("corev");
   if (corev) { setClip(corev, corev.dataset.pr); watch(corev); }
+
+  /* ---------- transfer walls: tiles pop in one by one (as in the talk deck), then the videos play ---------- */
+  var xfer = document.getElementById("xfer");
+  if (xfer) {
+    var SLOTS = [[180, 170], [380, 170], [580, 170], [778, 170], [74, 365], [274, 365], [475, 365], [678, 365], [878, 365]];
+    var ORDER = [4, 0, 5, 1, 6, 2, 7, 3, 8];
+    var popEase = function (u) { var c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(u - 1, 3) + c1 * Math.pow(u - 1, 2); };
+    var startVideo = function (box, v, cv) {
+      if (cv) {
+        var gone = false;
+        var hide = function () { if (gone) return; gone = true; cv.style.opacity = "0"; setTimeout(function () { if (cv.parentNode) cv.parentNode.removeChild(cv); }, 450); };
+        v.addEventListener("playing", hide, { once: true });
+        v.addEventListener("error", function () { /* keep the drawn poster tiles */ }, { once: true });
+      }
+      watch(v);
+    };
+    var reveal = function (box, delay) {
+      var v = box.querySelector("video");
+      if (reduce || !document.createElement("canvas").getContext) { watch(v); return; }
+      var cv = document.createElement("canvas"); box.insertBefore(cv, v.nextSibling);
+      var g = cv.getContext("2d"), img = new Image(), t0 = null;
+      img.src = v.getAttribute("poster");
+      var size = function () { var k = window.devicePixelRatio || 1, W = Math.round(box.clientWidth * k), H = Math.round(box.clientHeight * k); if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; } };
+      size(); g.fillStyle = "#000"; g.fillRect(0, 0, cv.width, cv.height);
+      v.preload = "auto"; try { v.load(); } catch (e) {}
+      var end = delay + ORDER.length * 170 + 460;
+      var frame = function (ts) {
+        if (t0 === null) t0 = ts;
+        var t = ts - t0; size();
+        var W = cv.width, H = cv.height; g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
+        if (img.complete && img.naturalWidth) {
+          var sw = img.naturalWidth, sh = img.naturalHeight, u = sw / 960, s = W / sw, hw = 100 * u;
+          ORDER.forEach(function (k, i) {
+            var p = (t - delay - i * 170) / 460; if (p <= 0) return;
+            var z = Math.min(1.06, popEase(Math.min(1, p))), cx = SLOTS[k][0] * u, cy = SLOTS[k][1] * u;
+            var x0 = Math.max(0, cx - hw), x1 = Math.min(sw, cx + hw), y0 = Math.max(0, cy - hw), y1 = Math.min(sh, cy + hw);
+            g.save(); g.translate(cx * s, cy * s); g.scale(z, z); g.globalAlpha = Math.min(1, p * 2.5);
+            g.drawImage(img, x0, y0, x1 - x0, y1 - y0, (x0 - cx) * s, (y0 - cy) * s, (x1 - x0) * s, (y1 - y0) * s);
+            g.restore();
+          });
+        }
+        if (t < end) requestAnimationFrame(frame); else startVideo(box, v, cv);
+      };
+      requestAnimationFrame(frame);
+    };
+    var go = function () {
+      xfer.classList.add("go");
+      reveal(xfer.querySelector(".xv.l"), 0);
+      reveal(xfer.querySelector(".xv.r"), 1500);
+    };
+    if ("IntersectionObserver" in window && !reduce) {
+      var xio = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { xio.disconnect(); go(); } }, { threshold: 0.35 });
+      xio.observe(xfer);
+    } else { xfer.classList.add("go"); xfer.querySelectorAll("video").forEach(watch); }
+  }
   window.addEventListener("resize", function () { document.querySelectorAll("video[data-pr]").forEach(fitPos); });
 
   /* ---------- telemetry: per-frame MPS readouts and camera-frame 3D joints ---------- */
@@ -471,7 +526,8 @@
     var navIo = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        Object.keys(links).forEach(function (k) { links[k].classList.toggle("active", k === e.target.id); });
+        var id = e.target.id === "transfer" ? "benchmark" : e.target.id;
+        Object.keys(links).forEach(function (k) { links[k].classList.toggle("active", k === id); });
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     document.querySelectorAll("section[id]").forEach(function (s) { navIo.observe(s); });

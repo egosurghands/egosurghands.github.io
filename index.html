@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
-  <link rel="stylesheet" href="style.css?v=20261118b">
+  <link rel="stylesheet" href="style.css?v=20261125f">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("esh-theme"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
@@ -71,7 +71,8 @@
         <h1 class="name">EgoSurgHands</h1>
         <p class="sub">An Egocentric 3D Hand Pose Dataset &amp; Benchmark for Open-Surgery Training</p>
         <p class="by"><span>Ankit Pal<sup>1</sup></span><span>Guillaume Kugener<sup>2</sup></span><span>Sofia Volpi<sup>2</sup></span><span>Joshua Schwartz<sup>2</sup></span><span>Alex Idarraga<sup>2</sup></span><span class="sr" title="Equal senior authorship"><span>Pranav Rajpurkar<sup>1,†</sup></span><span>Gabriel A Brat<sup>1,2,†</sup></span></span></p>
-        <p class="af"><a class="inst" href="https://hms.harvard.edu" target="_blank" rel="noopener"><sup>1</sup><img class="hms" src="media/logos/hms_shield.svg" width="170" height="197" alt=""><span>Harvard Medical School</span></a><a class="inst" href="https://www.bidmc.org" target="_blank" rel="noopener"><sup>2</sup><img class="bidmc" src="media/logos/bidmc_light.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"></a><span class="eq"><sup>†</sup>Equal senior authorship</span></p>
+        <div class="shelf" role="list" aria-label="Affiliations and venue"><a role="listitem" class="sl hms" href="https://hms.harvard.edu" target="_blank" rel="noopener"><sup>1</sup><img src="media/logos/hms_shield.svg" width="170" height="197" alt=""><span>Harvard<br>Medical School</span></a><a role="listitem" class="sl nips" href="https://neurips.cc/Conferences/2026" target="_blank" rel="noopener"><img src="media/logos/neurips_light.svg" width="226" height="101" alt="NeurIPS 2026"></a><i class="dv" aria-hidden="true"></i><a role="listitem" class="sl rl" href="https://rajpurkarlab.hms.harvard.edu" target="_blank" rel="noopener"><img src="media/logos/rajpurkar_light.png" width="290" height="358" alt="Rajpurkar Lab"></a><a role="listitem" class="sl bidmc" href="https://www.bidmc.org" target="_blank" rel="noopener"><sup>2</sup><img src="media/logos/bidmc_light.svg" width="922" height="157" alt="Beth Israel Deaconess Medical Center"></a></div>
+        <p class="eqn"><sup>†</sup>Equal senior authorship</p>
         <div class="cta"><a class="pb" href="https://huggingface.co/datasets/surgicalinformatics/EgoSurgHands"><span aria-hidden="true">🤗</span>Dataset</a><a class="gb" href="https://github.com/monk1337/egoSurgHands"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>Code</a><span class="tl"><span class="soon">Paper<em>soon</em></span><a href="#benchmark">Leaderboard</a><a href="#citation">BibTeX</a></span></div>
       </header>
       <div class="console">
@@ -98,13 +99,6 @@
         <div class="stat"><div class="v">8</div><div class="l">methods benchmarked</div><div class="s">zero-shot, 5 metrics, 95% CIs</div></div>
       </div>
 
-      <div class="section-head center reveal">
-        <div class="eyebrow">Overview</div>
-        <h2>Abstract</h2>
-      </div>
-      <div class="abstract reveal">
-        <p>We introduce EgoSurgHands, an egocentric 3D hand-pose dataset and benchmark for open-surgery training tasks captured with Meta Project Aria glasses on standard surgical training pads. To our knowledge, EgoSurgHands is the first benchmark for real-captured egocentric hand pose estimation in open-surgery training on synthetic pads. It contains 41,909 training hand-instance rows across 55 procedure recordings and 9,476 human-validated evaluation rows across 13 held-out procedure recordings from 4 wearers at a single site over two recording days, spanning 13 distinct tasks, 3 glove colors, and 3 stages of training. Each frame includes Aria intrinsics, MPS (Machine Perception Services) hand landmarks with per-hand confidence, timestamps, and eye gaze, plus SLAM extrinsics for the 35 of 68 recordings where SLAM succeeded. The primary benchmark uses sensor-fused, human-validated pseudo-ground truth: evaluation labels are derived from Aria MPS and validated through multi-rater human review with senior-surgeon adjudication, and they are not mocap-grade. The original adaptation split is within-corpus (procedure-disjoint, with shared wearers), which we complement with a leave-one-wearer-out evaluation and an external multi-view triangulated validation of the labels. We benchmark eight methods under zero-shot transfer, spanning MANO-based (HaMeR, WiLoR, WildHands, JointTransformer, SimpleHand, MeshGraphormer), two-hand (IntagHand), and keypoint-only (MediaPipe Hands) families. Within the evaluated model panel, backbones pretrained using egocentric data are associated with stronger zero-shot transfer, with JointTransformer achieving the best zero-shot result at 14.95 mm PA-MPJPE, and a substantial surgical-domain gap remains. As a lightweight diagnostic baseline for within-dataset adaptation, a 58K-parameter residual corrector (JRN) on frozen backbones reaches 10.96-14.85 mm PA-MPJPE on held-out wearers for the two ego-pretrained backbones. We release the dataset, benchmark code, checkpoints, and multi-rater annotation framework.</p>
-      </div>
     </div>
   </section>
 
@@ -254,6 +248,26 @@
       <pre class="code reveal" aria-label="Loading the dataset with the Hugging Face datasets library"><span class="k">from</span> datasets <span class="k">import</span> load_dataset
 
 ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <span class="c"># splits: train, validation (request access on the dataset page, then huggingface-cli login)</span></pre>
+    </div>
+  </section>
+
+  <!-- ================= TRANSFER: everyday first-person video -> surgery ================= -->
+  <section id="transfer" aria-labelledby="transfer-title">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <div class="eyebrow">Benchmark · The question</div>
+        <h2 id="transfer-title">Does pretraining on everyday first&#8209;person video transfer to surgery?</h2>
+        <p class="lead">Both clips come from Project Aria glasses. Almost everything else changes: gloves, steel instruments, suture, the room.</p>
+      </div>
+      <div class="xfer" id="xfer">
+        <div class="xv l"><video class="xvid" muted loop playsinline preload="none" poster="media/epic_stable.jpg" src="media/epic_stable.mp4" aria-label="Everyday first-person video: nine kitchen views from HD-EPIC"></video><a class="xchip" href="https://hd-epic.github.io" target="_blank" rel="noopener">HD-EPIC · CVPR 2025</a></div>
+        <div class="xarrow" aria-hidden="true"><span class="pill">pretraining transfer</span><svg viewBox="0 0 100 24"><path class="ln" d="M4 12 H 90"/><path class="hd" d="M80 3 L 94 12 L 80 21"/></svg></div>
+        <div class="xv r"><video class="xvid" muted loop playsinline preload="none" poster="media/ego_round.jpg" src="media/ego_round.mp4" aria-label="EgoSurgHands: nine surgical-training views with hand tracking"></video><span class="xchip">EgoSurgHands · Aria glasses</span></div>
+        <div class="xcap l"><b>Everyday first-person video</b><span>Bare hands, home kitchens, everyday objects</span></div>
+        <div class="xcap r"><b>Our first-person surgical training</b><span>Gloved hands, steel instruments, suture</span></div>
+      </div>
+      <p class="xans"><b>Yes.</b> Egocentric pretraining transfers best, with no surgical training: the best model's 3D joint error is 40% lower than the non-egocentric reference. <a href="#benchmark">See the leaderboard ↓</a></p>
+      <p class="xnote">Kitchen clips from <a href="https://hd-epic.github.io" target="_blank" rel="noopener">HD-EPIC</a> (Perrett et al., CVPR 2025).</p>
     </div>
   </section>
 
@@ -470,24 +484,8 @@ ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <
     </div>
   </section>
 
-  <!-- ================= LIMITATIONS ================= -->
-  <section id="limitations">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow">Scope</div>
-        <h2>Limitations</h2>
-      </div>
-      <ul class="limits reveal">
-        <li>Four wearers at one site over two days, on synthetic pads rather than in a live operating room.</li>
-        <li>Labels are human-validated pseudo-ground truth, not mocap-grade, and cannot resolve sub-centimetre differences such as those among JRN-corrected models.</li>
-        <li>The original split shares wearers and days; the leave-one-wearer-out protocol addresses this for JRN.</li>
-        <li>All brown-glove frames come from one wearer, so glove colour and wearer are confounded for that stratum.</li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ================= FAQ ================= -->
-  <section id="faq" class="alt">
+  <section id="faq">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Questions</div>
@@ -523,7 +521,7 @@ ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <
   </section>
 
   <!-- ================= RESOURCES ================= -->
-  <section id="resources">
+  <section id="resources" class="alt">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Resources</div>
@@ -557,7 +555,7 @@ ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <
   </section>
 
   <!-- ================= CITATION ================= -->
-  <section id="citation" class="alt">
+  <section id="citation">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Citation</div>
@@ -599,6 +597,6 @@ ds = load_dataset(<span class="s">"surgicalinformatics/EgoSurgHands"</span>)   <
 <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
 <div class="lightbox" id="lightbox" aria-hidden="true"><img alt=""></div>
 
-<script src="main.js?v=20261118b" defer></script>
+<script src="main.js?v=20261125f" defer></script>
 </body>
 </html>
