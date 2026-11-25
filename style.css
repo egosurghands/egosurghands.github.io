@@ -609,3 +609,16 @@ a.xchip:hover { text-decoration: underline; }
   .hd .shelf .rl img { height: 42px; } .hd .shelf .bidmc img { height: 26px; } .hd .shelf .dv { height: 30px; }
 }
 #overview .stats:last-child { margin-bottom: 0; }
+
+/* ---------- phones: bigger touch areas, no clipped code, readable micro-labels ---------- */
+.hot::before { content: ""; position: absolute; inset: -14px; border-radius: 50%; }
+.hd .shelf .sl { min-height: 44px; }
+@media (max-width: 640px) {
+  .brand, .tl a, .card-link { padding-block: 10px; margin-block: -10px; }
+  .btn.sm { min-height: 40px; }
+  pre.code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12.5px; padding: 14px; }
+  .bib pre.code { padding-top: 50px; }
+  .ti em { font-size: 10px; }
+  .tl .soon em { font-size: 10px; }
+  .read .k { font-size: 10.5px; }
+}
